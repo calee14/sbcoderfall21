@@ -20,28 +20,15 @@ def board_load():
 
 #loads the pieces onto the board (TODO: move to Board.py)
 def opening_load():
-    pieces = [
-        Rook("w", "a1"),
-        Knight("w", "b1"),
-        Bishop("w", "c1"),
-        Queen("w", "d1"),
-        King("w", "e1"),
-        Bishop("w", "f1"),
-        Knight("w", "g1"),
-        Rook("w", "h1"),
-        Rook("b", "a8"),
-        Knight("b", "b8"),
-        Bishop("b", "c8"),
-        Queen("b", "d8"),
-        King("b", "e8"),
-        Bishop("b", "f8"),
-        Knight("b", "g8"),
-        Rook("b", "h8")
-    ]
-    pieces += [Pawn("w", (chr(i + 97) + "2")) for i in range(8)]
-    pieces += [Pawn("b", (chr(i + 97) + "7")) for i in range(8)]
-    for piece in pieces:
-        piece.load(screen)
+    board.add_piece(screen, Rook("w", "a1"))
+    board.add_piece(screen, Knight("w", "b1"))
+    board.add_piece(screen, Bishop("w", "c1"))
+    board.add_piece(screen, Queen("w", "d1"))
+    board.add_piece(screen, King("w", "e1"))
+    for i in range (8):
+        board.add_piece(screen, Pawn("w", (chr(i + 97) + "2" )))
+        board.add_piece(screen, Pawn("b", (chr(i + 97) + "7" )))
+
 
 def main():
     # pygame runtime
@@ -50,12 +37,24 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-
             board_load()
             opening_load()
-            x, y = board.get_mouse_square()
-            board.highlight_mouse_square(x, y, screen)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print ("down")
+                # highlight current clicked square, if there is a piece
+                # highlight options for clicked square, if there is a piece
+                # track image to mouse position
+                pass
+            if event.type == pygame.MOUSEBUTTONUP:
+                print ("up")
+                # update board to have the new piece in the position indicated, if legal
+                pass
+
+            else:
+                x, y = board.get_mouse_square()
+                board.highlight_mouse_square(x, y, screen)
             pygame.display.flip()
             clock.tick(60)
 if __name__ == '__main__':
     main()
+    board.print_board()
