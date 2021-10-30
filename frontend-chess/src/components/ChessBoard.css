@@ -1,7 +1,7 @@
 .chess-board {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto;
-    background-color: black;
+    background-color: rgb(0 74 158);
     padding: 5px;
     width: 680px;
     height: 680px
@@ -14,9 +14,9 @@
 }
 
 .white {
-    background-color: white;
+    background-color:rgb(232 235 239);
 }
 
 .black {
-    background-color: black;
+    background-color: rgb(125 135 150);
 }
