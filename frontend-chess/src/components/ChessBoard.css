@@ -1,10 +1,22 @@
-.board-container {
-    width: 70%;
-    float: left;
+.chess-board {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    background-color: black;
+    padding: 5px;
+    width: 680px;
+    height: 680px
 }
 
-.chess-board {
-    margin: auto;
-    width: 600px;
-    width: 600px
+.board-block {
+    background-color: white;
+    width: 85px;
+    height: 85px;
+}
+
+.white {
+    background-color: white;
+}
+
+.black {
+    background-color: black;
 }
