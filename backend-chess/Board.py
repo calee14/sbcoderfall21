@@ -1,6 +1,7 @@
 import pygame
 from Piece import Piece
 from PIL import Image
+import os
 
 class Board:
     def __init__(self, dim, border, name):
