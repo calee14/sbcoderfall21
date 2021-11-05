@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, Component } from 'react'
 import Block from './Block'
 import Square from './Square';
 import { useState } from 'react';
@@ -22,8 +22,16 @@ import wq from './ChessImages/wq.png';
 import wr from './ChessImages/wr.png';
 
 function initializeBoard(board) {
+    /* 
+    Param:
+        board: Array[Array[Square]]
+    Return:
+        board: Array[Array[Square]] 
+    */
+
     const AI_color = 'b';
     const player_color = 'w';
+
     // intializes a 2d array of the chess board with pieces
     for(var i=0;i<8;i++) {
         var row = [];
@@ -44,7 +52,7 @@ function initializeBoard(board) {
     board[0][3].addPiece(new Queen(AI_color, [0,3], bq));
     board[0][4].addPiece(new King(AI_color, [0,4], bk));
     board[0][5].addPiece(new Bishop(AI_color, [0,5], bb));
-    board[0][6].addPiece(new Knight(AI_color, [0,6], bk));
+    board[0][6].addPiece(new Knight(AI_color, [0,6], bn));
     board[0][7].addPiece(new Rook(AI_color, [0,7], br));
     for(var i=0;i<8;i++) {
         board[1][i].addPiece(new Pawn(AI_color, [0, i], bp));
@@ -56,7 +64,7 @@ function initializeBoard(board) {
     board[7][3].addPiece(new Queen(player_color, [7,3], wq));
     board[7][4].addPiece(new King(player_color, [7,4], wk));
     board[7][5].addPiece(new Bishop(player_color, [7,5], wb));
-    board[7][6].addPiece(new Knight(player_color, [7,6], wk));
+    board[7][6].addPiece(new Knight(player_color, [7,6], wn));
     board[7][7].addPiece(new Rook(player_color, [7,7], wr));
     for(var i=0;i<8;i++) {
         board[6][i].addPiece(new Pawn(player_color, [0, i], wp));
@@ -72,18 +80,28 @@ function ChessBoard(props) {
     initBoard = initializeBoard(initBoard);
 
     const [board, setBoard] = useState(initBoard);
+    const [mousePos, setMousePos] = useState({x: 0, y: 0});
     
-    for(var i=0;i<8;i++) {
-        for(var j=0;j<8;j++) {
-            console.log(board[i][j].pieceType);
-        }
+    function handleMouseMove(e) {
+        e.preventDefault();
+        setMousePos({x: e.clientX, y: e.clientY});
+    }
+
+    function getMousePos(e) {
+        e.preventDefault()
+        handleMouseMove()
+        console.log(mousePos)
+        return mousePos;
+    }
+    function handleDragEnd(e) {
+        console.log(e.clientX, e.clientY);
     }
 
     return (
     <>
         <div className="board-container">
-            <div className="chess-board">
-                { board.map((row) => row.map((square) => <Block key={square.pos} square={square}/>)) }
+            <div className="chess-board" onDragEnter={() => console.log('hello')} onDragEnd={handleDragEnd}>
+                { board.map((row) => row.map((square) => <Block key={square.pos} square={square}/> )) }
             </div>
         </div>
     </>
