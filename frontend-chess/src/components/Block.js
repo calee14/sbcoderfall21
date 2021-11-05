@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './ChessBoard.css'
 
 function Block(props) {
-    const {square} = props;
+    const {square, getMousePos} = props;
     const [isClicked, setClicked] = useState(false)
     
     function handleClicked(e) {
@@ -22,7 +22,7 @@ function Block(props) {
 
     return (
         <>
-            <div className={`board-block ${square.squareColor}`} onClick={handleClicked}>
+            <div className={`board-block ${square.squareColor}`}>
                 {img}
             </div>
         </>
