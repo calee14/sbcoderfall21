@@ -74,8 +74,13 @@ function initializeBoard(board) {
 }
 
 
-function getPosOfPiece(x, y) {
-
+function getPosOfPiece(e) {
+    var x = e.nativeEvent.offsetX - 5; // - 5 for the border offset
+    var y = e.nativeEvent.offsetY - 5;
+    if(x < 0 || x >= 680 || y < 0 || y >= 680) { return; } // ignore clicks outside boundaries of the board
+    const row = Math.floor(x / 85);
+    const col = Math.floor(y / 85);
+    return [row, col]
 }
 
 function ChessBoard(props) {
@@ -93,38 +98,31 @@ function ChessBoard(props) {
     const [mousePos, setMousePos] = useState({x: 0, y: 0});
     const [mouseState, setMouseState] = useState(MOUSESTATE.NOPRESS)
     
-    function handleMouseMove(e) {
-        e.preventDefault();
-        setMousePos({x: e.clientX, y: e.clientY});
+    function handleMouseUp(e) {
+        console.log(getPosOfPiece(e));
+        setMouseState(MOUSESTATE.NOPRESS)
+        
     }
 
-    function getMousePos(e) {
-        e.preventDefault()
-        handleMouseMove()
-        console.log(mousePos)
-        return mousePos;
+    function handleMouseDrag(e)
+    {
+        switch(mouseState) {
+            case MOUSESTATE.PRESSDOWN:
+                console.log(getPosOfPiece(e));
+                break;
+            default:
+                break;
+        }
     }
-    function handleDragEnd(e) {
-        console.log(e.target.screenX, e.target.screenY);
-    }
-
     function handleMouseEnter(e) {
-        var x = e.nativeEvent.offsetX - 5; // - 5 for the border offset
-        var y = e.nativeEvent.offsetY - 5;
-        console.log(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-        if(x < 0 || x >= 680 || y < 0 || y >= 680) { return; }
-        const row = Math.floor(x / 85);
-        const col = Math.floor(y / 85);
-        console.log(row, col);
+        console.log(getPosOfPiece(e));
+        setMouseState(MOUSESTATE.PRESSDOWN);
     }
-    
-    function handleMouseOut(e) {
-        console.log("mouse release");
-    }
+
     return (
     <>
         <div className="board-container">
-            <div className="chess-board" onMouseDown={handleMouseEnter} onMouseMove={() => console.log('hello')} onMouseUp={handleMouseOut}>
+            <div className="chess-board" onMouseDown={handleMouseEnter} onMouseMove={handleMouseDrag} onMouseUp={handleMouseUp}>
                 { board.map((row) => row.map((square) => <Block key={square.pos} square={square}/> )) }
             </div>
         </div>
