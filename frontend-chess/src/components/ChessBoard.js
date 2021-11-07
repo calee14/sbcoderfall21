@@ -67,7 +67,7 @@ function initializeBoard(board) {
     board[7][6].addPiece(new Knight(player_color, [7,6], wn));
     board[7][7].addPiece(new Rook(player_color, [7,7], wr));
     for(var i=0;i<8;i++) {
-        board[6][i].addPiece(new Pawn(player_color, [0, i], wp));
+        board[6][i].addPiece(new Pawn(player_color, [6, i], wp));
     }
 
     return board;
@@ -78,9 +78,10 @@ function getPosOfPiece(e) {
     var x = e.nativeEvent.offsetX - 5; // - 5 for the border offset
     var y = e.nativeEvent.offsetY - 5;
     if(x < 0 || x >= 680 || y < 0 || y >= 680) { return; } // ignore clicks outside boundaries of the board
-    const row = Math.floor(x / 85);
-    const col = Math.floor(y / 85);
-    return [row, col]
+    const row = Math.floor(y / 85); // x is the col side
+    const col = Math.floor(x / 85);
+    console.log("this is the func", row, col);
+    return [row, col];
 }
 
 function ChessBoard(props) {
@@ -96,7 +97,8 @@ function ChessBoard(props) {
 
     const [board, setBoard] = useState(initBoard);
     const [mousePos, setMousePos] = useState({x: 0, y: 0});
-    const [mouseState, setMouseState] = useState(MOUSESTATE.NOPRESS)
+    const [mouseState, setMouseState] = useState(MOUSESTATE.NOPRESS);
+    const [heldPiece, setHeldPiece] = useState(null);
     
     function handleMouseUp(e) {
         console.log(getPosOfPiece(e));
@@ -115,7 +117,10 @@ function ChessBoard(props) {
         }
     }
     function handleMouseEnter(e) {
-        console.log(getPosOfPiece(e));
+        const [row, col] = getPosOfPiece(e);
+        if(board[row][col].getPieceType()) {
+            console.log(board[row][col].getPieceType())
+        }
         setMouseState(MOUSESTATE.PRESSDOWN);
     }
 
@@ -124,6 +129,7 @@ function ChessBoard(props) {
         <div className="board-container">
             <div className="chess-board" onMouseDown={handleMouseEnter} onMouseMove={handleMouseDrag} onMouseUp={handleMouseUp}>
                 { board.map((row) => row.map((square) => <Block key={square.pos} square={square}/> )) }
+                
             </div>
         </div>
     </>
