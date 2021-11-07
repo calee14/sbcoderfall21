@@ -73,14 +73,25 @@ function initializeBoard(board) {
     return board;
 }
 
+
+function getPosOfPiece(x, y) {
+
+}
+
 function ChessBoard(props) {
 
     var initBoard = []; 
     
     initBoard = initializeBoard(initBoard);
 
+    const MOUSESTATE = {
+        PRESSDOWN: "pressdown", // The user has pressed down on the board
+        NOPRESS: "nopress", // not pressing the mouse
+    }
+
     const [board, setBoard] = useState(initBoard);
     const [mousePos, setMousePos] = useState({x: 0, y: 0});
+    const [mouseState, setMouseState] = useState(MOUSESTATE.NOPRESS)
     
     function handleMouseMove(e) {
         e.preventDefault();
@@ -94,13 +105,26 @@ function ChessBoard(props) {
         return mousePos;
     }
     function handleDragEnd(e) {
-        console.log(e.clientX, e.clientY);
+        console.log(e.target.screenX, e.target.screenY);
     }
 
+    function handleMouseEnter(e) {
+        var x = e.nativeEvent.offsetX - 5; // - 5 for the border offset
+        var y = e.nativeEvent.offsetY - 5;
+        console.log(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        if(x < 0 || x >= 680 || y < 0 || y >= 680) { return; }
+        const row = Math.floor(x / 85);
+        const col = Math.floor(y / 85);
+        console.log(row, col);
+    }
+    
+    function handleMouseOut(e) {
+        console.log("mouse release");
+    }
     return (
     <>
         <div className="board-container">
-            <div className="chess-board" onDragEnter={() => console.log('hello')} onDragEnd={handleDragEnd}>
+            <div className="chess-board" onMouseDown={handleMouseEnter} onMouseMove={() => console.log('hello')} onMouseUp={handleMouseOut}>
                 { board.map((row) => row.map((square) => <Block key={square.pos} square={square}/> )) }
             </div>
         </div>
