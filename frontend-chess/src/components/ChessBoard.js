@@ -111,8 +111,8 @@ function ChessBoard(props) {
     {
         switch(mouseState) {
             case MOUSESTATE.PRESSDOWN:
-                console.log(e.nativeEvent.screenX, "drag");
                 setMousePos({x: e.nativeEvent.clientX, y: e.nativeEvent.clientY});
+                console.log(mousePos.x, mousePos.y, "drag");
                 break;
             default:
                 break;
@@ -122,8 +122,9 @@ function ChessBoard(props) {
         const [row, col] = getPosOfPiece(e);
         if(board[row][col].getPieceType()) {
             setHeldPiece(board[row][col].getPieceType());
-            setMousePos({x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY});
         }
+        setMousePos({x: e.nativeEvent.clientX, y: e.nativeEvent.clientY});
+        console.log(mousePos.x, mousePos.y, "enter");
         setMouseState(MOUSESTATE.PRESSDOWN);
     }
 
