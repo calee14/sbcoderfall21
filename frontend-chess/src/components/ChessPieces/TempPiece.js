@@ -6,12 +6,12 @@ function TempPiece(props) {
     
     const mouseStyle = {
         position: 'absolute',
-        top: mousePos.y,
-        left: mousePos.x,
+        top: mousePos.y-40,
+        left: mousePos.x-40,
     }
     return (
         <>
-            <div className={`chess-piece-temp`} style={mouseStyle}>
+            <div className={`chess-piece-temp selectDisable`} style={mouseStyle}>
                 <img className="selectDisable" src={piece.imgURL} width={80} height={80}></img>
             </div>
         </>
