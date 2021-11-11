@@ -1,22 +1,47 @@
 .chess-board {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto;
-    background-color: black;
+    background-color: rgb(0 74 158);
     padding: 5px;
     width: 680px;
-    height: 680px
+    height: 680px;
 }
 
 .board-block {
     background-color: white;
     width: 85px;
     height: 85px;
+    pointer-events: none;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
 
 .white {
-    background-color: white;
+    background-color:rgb(232 235 239);
+}
+
+.w {
+    background-color:rgb(232 235 239);
 }
 
 .black {
-    background-color: black;
+    background-color: rgb(125 135 150);
+}
+
+.b {
+    background-color: rgb(125 135 150);
+}
+
+.selectDisable {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none; /* no elment selection */
+    -webkit-user-drag: none; /* don't handle user drag */
+    user-drag: none;
+    pointer-events: none; /* ignores all pointer events with mouse pointer*/
 }
