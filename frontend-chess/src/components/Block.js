@@ -15,7 +15,7 @@ function Block(props) {
 
     var img;
     if(square.pieceType != null) {
-        img = <img src={square.pieceType.imgURL} width={80} height={80}></img>
+        img = <img className="selectDisable" src={square.pieceType.imgURL} width={80} height={80}></img>
     } else {
         img = <img></img>
     }
