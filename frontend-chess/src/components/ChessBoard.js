@@ -132,7 +132,6 @@ function ChessBoard(props) {
     }
     function handleMouseEnter(e) {
         const [row, col] = getPosOfPiece(e);
-        if(!row || !col) { return; }
         if(board[row][col].getPieceType()) {
             setHeldPiece(board[row][col].getPieceType());
             setOrgPosition([row, col]);
@@ -145,6 +144,8 @@ function ChessBoard(props) {
     return (
     <>
         <div className="board-container">
+            <br/>
+            <br/>
             <div className="chess-board" onMouseLeave={handleMouseLeave} onMouseDown={handleMouseEnter} onMouseMove={handleMouseDrag} onMouseUp={handleMouseUp}>
                 { board.map((row) => row.map((square) => <Block key={square.pos} square={square}/> )) }
                 { heldPiece ? <TempPiece mousePos={mousePos} piece={heldPiece}/> : null}
