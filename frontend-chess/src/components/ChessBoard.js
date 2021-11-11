@@ -78,7 +78,7 @@ function initializeBoard(board) {
 function getPosOfPiece(e) {
     var x = e.nativeEvent.offsetX - 5; // - 5 for the border offset
     var y = e.nativeEvent.offsetY - 5;
-    if(x < 0 || x >= 680 || y < 0 || y >= 680) { return; } // ignore clicks outside boundaries of the board
+    if(x < 0 || x >= 680 || y < 0 || y >= 680) { return [-1, -1]; } // ignore clicks outside boundaries of the board
     const row = Math.floor(y / 85); // x is the col side
     const col = Math.floor(x / 85);
     return [row, col];
@@ -99,20 +99,32 @@ function ChessBoard(props) {
     const [mousePos, setMousePos] = useState({x: 0, y: 0});
     const [mouseState, setMouseState] = useState(MOUSESTATE.NOPRESS);
     const [heldPiece, setHeldPiece] = useState(null);
+    const [orgPosition, setOrgPosition] = useState([0, 0])
     
     
     function handleMouseUp(e) {
+        var pos = getPosOfPiece(e);
+        if(pos == [-1, -1]) {
+            board[orgPosition[0]][orgPosition[1]].addPiece(heldPiece);
+        } else {
+            board[pos[0]][pos[1]].addPiece(heldPiece)
+        }
         console.log(getPosOfPiece(e), "end");
         setMouseState(MOUSESTATE.NOPRESS)
         setHeldPiece(null);
     }
 
-    function handleMouseDrag(e)
-    {
+    function handleMouseLeave(e) {
+        board[orgPosition[0]][orgPosition[1]].addPiece(heldPiece);
+        console.log(getPosOfPiece(e), "end");
+        setMouseState(MOUSESTATE.NOPRESS)
+        setHeldPiece(null);
+    }
+
+    function handleMouseDrag(e) {
         switch(mouseState) {
             case MOUSESTATE.PRESSDOWN:
                 setMousePos({x: e.nativeEvent.clientX, y: e.nativeEvent.clientY});
-                console.log(mousePos.x, mousePos.y, "drag");
                 break;
             default:
                 break;
@@ -120,18 +132,20 @@ function ChessBoard(props) {
     }
     function handleMouseEnter(e) {
         const [row, col] = getPosOfPiece(e);
+        if(!row || !col) { return; }
         if(board[row][col].getPieceType()) {
             setHeldPiece(board[row][col].getPieceType());
+            setOrgPosition([row, col]);
+            board[row][col].removePiece();
         }
         setMousePos({x: e.nativeEvent.clientX, y: e.nativeEvent.clientY});
-        console.log(mousePos.x, mousePos.y, "enter");
         setMouseState(MOUSESTATE.PRESSDOWN);
     }
 
     return (
     <>
         <div className="board-container">
-            <div className="chess-board" onMouseDown={handleMouseEnter} onMouseMove={handleMouseDrag} onMouseUp={handleMouseUp}>
+            <div className="chess-board" onMouseLeave={handleMouseLeave} onMouseDown={handleMouseEnter} onMouseMove={handleMouseDrag} onMouseUp={handleMouseUp}>
                 { board.map((row) => row.map((square) => <Block key={square.pos} square={square}/> )) }
                 { heldPiece ? <TempPiece mousePos={mousePos} piece={heldPiece}/> : null}
             </div>
