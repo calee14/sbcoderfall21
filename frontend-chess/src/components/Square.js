@@ -17,7 +17,7 @@ class Square {
         this.pieceType = piece;
     }
 
-    removePiece(pos) {
+    removePiece() {
         this.pieceType = null;
     }
 }
