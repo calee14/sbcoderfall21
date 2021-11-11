@@ -40,7 +40,8 @@
     -khtml-user-select: none;
     -moz-user-select: none;
     -o-user-select: none;
-    user-select: none;
-    -webkit-user-drag: none;
+    user-select: none; /* no elment selection */
+    -webkit-user-drag: none; /* don't handle user drag */
     user-drag: none;
+    pointer-events: none; /* ignores all pointer events with mouse pointer*/
 }
