@@ -8,6 +8,7 @@ import King from './ChessPieces/King';
 import Knight from './ChessPieces/Knight';
 import Pawn from './ChessPieces/Pawn';
 import Queen from './ChessPieces/Queen';
+import TempPiece from './ChessPieces/TempPiece';
 import bb from './ChessImages/bb.png';
 import bk from './ChessImages/bk.png';
 import bn from './ChessImages/bn.png';
@@ -80,7 +81,6 @@ function getPosOfPiece(e) {
     if(x < 0 || x >= 680 || y < 0 || y >= 680) { return; } // ignore clicks outside boundaries of the board
     const row = Math.floor(y / 85); // x is the col side
     const col = Math.floor(x / 85);
-    console.log("this is the func", row, col);
     return [row, col];
 }
 
@@ -100,17 +100,19 @@ function ChessBoard(props) {
     const [mouseState, setMouseState] = useState(MOUSESTATE.NOPRESS);
     const [heldPiece, setHeldPiece] = useState(null);
     
+    
     function handleMouseUp(e) {
-        console.log(getPosOfPiece(e));
+        console.log(getPosOfPiece(e), "end");
         setMouseState(MOUSESTATE.NOPRESS)
-        
+        setHeldPiece(null);
     }
 
     function handleMouseDrag(e)
     {
         switch(mouseState) {
             case MOUSESTATE.PRESSDOWN:
-                console.log(getPosOfPiece(e));
+                console.log(e.nativeEvent.screenX, "drag");
+                setMousePos({x: e.nativeEvent.clientX, y: e.nativeEvent.clientY});
                 break;
             default:
                 break;
@@ -119,7 +121,8 @@ function ChessBoard(props) {
     function handleMouseEnter(e) {
         const [row, col] = getPosOfPiece(e);
         if(board[row][col].getPieceType()) {
-            console.log(board[row][col].getPieceType())
+            setHeldPiece(board[row][col].getPieceType());
+            setMousePos({x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY});
         }
         setMouseState(MOUSESTATE.PRESSDOWN);
     }
@@ -129,7 +132,7 @@ function ChessBoard(props) {
         <div className="board-container">
             <div className="chess-board" onMouseDown={handleMouseEnter} onMouseMove={handleMouseDrag} onMouseUp={handleMouseUp}>
                 { board.map((row) => row.map((square) => <Block key={square.pos} square={square}/> )) }
-                
+                { heldPiece ? <TempPiece mousePos={mousePos} piece={heldPiece}/> : null}
             </div>
         </div>
     </>
