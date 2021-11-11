@@ -115,10 +115,17 @@ function ChessBoard(props) {
     }
 
     function handleMouseLeave(e) {
-        board[orgPosition[0]][orgPosition[1]].addPiece(heldPiece);
-        console.log(getPosOfPiece(e), "end");
-        setMouseState(MOUSESTATE.NOPRESS)
-        setHeldPiece(null);
+        switch(mouseState) {
+            case MOUSESTATE.PRESSDOWN:
+                board[orgPosition[0]][orgPosition[1]].addPiece(heldPiece);
+                console.log(getPosOfPiece(e), "end");
+                setMouseState(MOUSESTATE.NOPRESS)
+                setHeldPiece(null);
+                break;
+            default:
+                break;
+        }
+        
     }
 
     function handleMouseDrag(e) {
