@@ -41,6 +41,9 @@ def main():
             opening_load()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 print ("down")
+                x, y = board.get_mouse_square()
+                clickedPiece = board.getPiece(y, x)
+                clickedPiece.show_movement()
                 # highlight current clicked square, if there is a piece
                 # highlight options for clicked square, if there is a piece
                 # track image to mouse position
@@ -57,4 +60,4 @@ def main():
             clock.tick(60)
 if __name__ == '__main__':
     main()
-    board.print_board()
+    # board.print_board()
