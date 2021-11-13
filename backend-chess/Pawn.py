@@ -9,6 +9,13 @@ class Pawn(Piece):
 
     # TODO: list the movement options of a pawn
     def show_movement(self):
-        arr = []
-
-
+        i, j = super().translate_pos_matrix()
+        print(i)
+        print(j)
+        if self.color == "w":
+            super().possibleMoves.append((i-1, j))
+            if i == 7:
+                # highlight the first two squares in front
+                super().possibleMoves.append((i-2, j))
+        elif self.color == "b":
+            pass
