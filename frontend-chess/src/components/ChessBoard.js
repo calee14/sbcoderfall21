@@ -56,7 +56,7 @@ function initializeBoard(board) {
     board[0][6].addPiece(new Knight(AI_color, [0,6], bn));
     board[0][7].addPiece(new Rook(AI_color, [0,7], br));
     for(var i=0;i<8;i++) {
-        board[1][i].addPiece(new Pawn(AI_color, [0, i], bp));
+        board[1][i].addPiece(new Pawn(AI_color, [1, i], bp));
     }
 
     board[7][0].addPiece(new Rook(player_color, [7,0], wr));
@@ -106,9 +106,9 @@ function ChessBoard(props) {
         var pos = getPosOfPiece(e);
         if(pos == [-1, -1]) { // attempt to move piece failed and won't be processed
             board[orgPosition[0]][orgPosition[1]].addPiece(heldPiece);
-        } else { // complete an valid movement of a piece
+        } else if(heldPiece != null) { // complete an valid movement of a piece
             board[pos[0]][pos[1]].addPiece(heldPiece) // place the piece onto the board
-            board[pos[0]][pos[1]].addMoveHistory(pos) // add the pos to the move history
+            board[pos[0]][pos[1]].getPieceType().addMoveHistory(pos) // add the pos to the move history and set the new piece's pos
         }
         console.log(getPosOfPiece(e), "end");
         setMouseState(MOUSESTATE.NOPRESS)
@@ -140,7 +140,9 @@ function ChessBoard(props) {
     }
     function handleMouseEnter(e) {
         const [row, col] = getPosOfPiece(e);
-        if(board[row][col].getPieceType()) {
+        if(board[row][col].getPieceType()) { // grabbed a piece
+            const moveOptions = board[row][col].getPieceType().getMovementOptions(board);
+            console.log(moveOptions);
             setHeldPiece(board[row][col].getPieceType());
             setOrgPosition([row, col]);
             board[row][col].removePiece();
