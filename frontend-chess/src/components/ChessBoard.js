@@ -104,10 +104,11 @@ function ChessBoard(props) {
     
     function handleMouseUp(e) {
         var pos = getPosOfPiece(e);
-        if(pos == [-1, -1]) {
+        if(pos == [-1, -1]) { // attempt to move piece failed and won't be processed
             board[orgPosition[0]][orgPosition[1]].addPiece(heldPiece);
-        } else {
-            board[pos[0]][pos[1]].addPiece(heldPiece)
+        } else { // complete an valid movement of a piece
+            board[pos[0]][pos[1]].addPiece(heldPiece) // place the piece onto the board
+            board[pos[0]][pos[1]].addMoveHistory(pos) // add the pos to the move history
         }
         console.log(getPosOfPiece(e), "end");
         setMouseState(MOUSESTATE.NOPRESS)
