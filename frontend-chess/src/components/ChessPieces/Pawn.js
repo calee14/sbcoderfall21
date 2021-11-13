@@ -5,14 +5,47 @@ class Pawn extends Piece {
         super(color, pos, imgURL);
     }
 
-    showMovement(board=null, playerPiece=true) {
-        var moveOptions= [[1,0]];
-        if(this.moveHistory.length == 0) { // this is the first move for the pawn
+    getMovementOptions(board=null, playerPiece=true) {
+        /*
+            Parameters:
+                board: Array[Square]
+                playerPiece: bool
+            Returns: Array[] of the positions on the board
+        */
+
+        const pos = this.getPos();
+        console.log(pos)
+        var pieceRow = pos[0];
+        var pieceCol = pos[1];
+
+        var moveOptions = [];
+
+        // Check if pawn can move one and two spaces
+        var tempPos = [1, 0];
+        var newPos = [pieceRow-tempPos[0], pieceCol-tempPos[1]];
+        if(!this.pieceExists(board, newPos)) {
+            console.log('the first movement')
+            moveOptions.push(newPos);
             
+            // check for the two space movement
+            tempPos = [2, 0];
+            newPos = [pieceRow-tempPos[0], pieceCol-tempPos[1]];
+            if(this.moveHistory.length == 0 && !this.pieceExists(board, newPos)) { // this is the first move for the pawn
+                moveOptions.push(newPos);
+            }
         }
         
-        return;
+        // Check moves if pawn can attack
+        const attackOptions = [[1, 1], [1, -1]];
+        for(var i=0;i<attackOptions.length;i++) {
+            const newPos = [pieceRow-attackOptions[i][0], pieceCol-attackOptions[i][1]]
+            if(this.pieceExists(board, newPos) && this.hasOppPieceColor(board, newPos)) {
+                moveOptions.push(newPos);
+            }
+        }
+        return moveOptions;
     }
+
 }
 
 export default Pawn;
