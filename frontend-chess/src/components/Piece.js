@@ -1,15 +1,15 @@
 import React from "react";
 
 class Piece {
-    constructor(color, name, pos) {
-        this.color = color;
-        this.name = name; // img file name
-        this.pos = pos
+    constructor(color, pos, imgURL="") {
+        this.pieceColor = color;
+        this.pos = pos;
+        this.imgURL = imgURL// img file name
     }
 
-    getImage() {
-        return 'img';
-    }
+    getImage() { return this.imgURL; }
+    getPos() { return this.pos; }
+    getPieceColor() { return this.pieceColor; }
 }
 
 export default Piece
