@@ -15,7 +15,7 @@ class Square {
     getSquareColor() { return this.squareColor; }
     getMoveableSquare() { return this.moveableSquare; }
 
-    setMoveableSquare(bool) { this.moveableSquare = bool; }
+    setMoveableSquare(b) { this.moveableSquare = b; }
 
     addPiece(piece) {
         this.pieceType = piece;
