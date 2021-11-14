@@ -14,9 +14,12 @@ class Piece {
     getPieceColor() { return this.pieceColor; }
     getMoveHistory() { return this.moveHistory; }
 
-    addMoveHistory(pos) { // store history of movement and update current pos
-        this.moveHistory.push(pos); 
-        this.pos = pos;
+    addMoveHistory(newPos) { // store history of movement and update current pos
+        console.log('our pos before log', this.pos)
+        if(JSON.stringify(newPos) !== JSON.stringify(this.pos)) {
+            this.moveHistory.push(newPos); 
+            this.pos = newPos;
+        }
     }
 
     hasOppPieceColor(board, pos) {
