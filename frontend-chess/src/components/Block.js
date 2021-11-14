@@ -24,7 +24,9 @@ function Block(props) {
         <>
             <div className={`board-block ${square.squareColor}`}>
                 {img}
+                {square.moveableSquare == true ? <div className="tiny-circle"></div> : null}
             </div>
+            
         </>
     );
 }
