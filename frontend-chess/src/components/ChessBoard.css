@@ -8,6 +8,7 @@
 }
 
 .board-block {
+    position: relative;
     background-color: white;
     width: 85px;
     height: 85px;
@@ -44,4 +45,15 @@
     -webkit-user-drag: none; /* don't handle user drag */
     user-drag: none;
     pointer-events: none; /* ignores all pointer events with mouse pointer*/
+}
+
+.tiny-circle {
+    position: absolute;
+    top: 33px;
+    left: 33px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background: black;
+    opacity: 0.3;
 }

@@ -6,12 +6,16 @@ class Square {
         this.pieceType = pieceType; // of class type piece
         this.pos = pos;
         this.imgURL = imgURL// img file name
+        this.moveableSquare = false;
     }
 
     getImage() { return this.imgURL; }
     getPos() { return this.pos; }
     getPieceType() { return this.pieceType; }
     getSquareColor() { return this.squareColor; }
+    getMoveableSquare() { return this.moveableSquare; }
+
+    setMoveableSquare(b) { this.moveableSquare = b; }
 
     addPiece(piece) {
         this.pieceType = piece;
@@ -20,6 +24,7 @@ class Square {
     removePiece() {
         this.pieceType = null;
     }
+
 }
 
 export default Square;

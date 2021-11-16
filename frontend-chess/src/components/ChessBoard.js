@@ -56,7 +56,7 @@ function initializeBoard(board) {
     board[0][6].addPiece(new Knight(AI_color, [0,6], bn));
     board[0][7].addPiece(new Rook(AI_color, [0,7], br));
     for(var i=0;i<8;i++) {
-        board[1][i].addPiece(new Pawn(AI_color, [0, i], bp));
+        board[1][i].addPiece(new Pawn(AI_color, [1, i], bp));
     }
 
     board[7][0].addPiece(new Rook(player_color, [7,0], wr));
@@ -84,6 +84,14 @@ function getPosOfPiece(e) {
     return [row, col];
 }
 
+function clearMovementOptions(board) {
+    for(var i=0;i<8;i++) {
+        for(var j=0;j<8;j++) {
+            board[i][j].setMoveableSquare(false);
+        }
+    }
+}
+
 function ChessBoard(props) {
 
     var initBoard = []; 
@@ -104,10 +112,14 @@ function ChessBoard(props) {
     
     function handleMouseUp(e) {
         var pos = getPosOfPiece(e);
-        if(pos == [-1, -1]) {
+        console.log('pos we logging', pos)
+        if(pos == [-1, -1]) { // attempt to move piece failed and won't be processed
             board[orgPosition[0]][orgPosition[1]].addPiece(heldPiece);
-        } else {
-            board[pos[0]][pos[1]].addPiece(heldPiece)
+        } else if(heldPiece != null) { // complete an valid movement of a piece
+            board[pos[0]][pos[1]].addPiece(heldPiece) // place the piece onto the board
+            console.log('pos before log', pos)
+            board[pos[0]][pos[1]].getPieceType().addMoveHistory(pos) // add the pos to the move history and set the new piece's pos
+            clearMovementOptions(board);
         }
         console.log(getPosOfPiece(e), "end");
         setMouseState(MOUSESTATE.NOPRESS)
@@ -115,10 +127,18 @@ function ChessBoard(props) {
     }
 
     function handleMouseLeave(e) {
-        board[orgPosition[0]][orgPosition[1]].addPiece(heldPiece);
-        console.log(getPosOfPiece(e), "end");
-        setMouseState(MOUSESTATE.NOPRESS)
-        setHeldPiece(null);
+        switch(mouseState) {
+            case MOUSESTATE.PRESSDOWN:
+                board[orgPosition[0]][orgPosition[1]].addPiece(heldPiece);
+                console.log(getPosOfPiece(e), "end");
+                setMouseState(MOUSESTATE.NOPRESS)
+                setHeldPiece(null);
+                clearMovementOptions(board);
+                break;
+            default:
+                break;
+        }
+        
     }
 
     function handleMouseDrag(e) {
@@ -132,8 +152,13 @@ function ChessBoard(props) {
     }
     function handleMouseEnter(e) {
         const [row, col] = getPosOfPiece(e);
-        if(!row || !col) { return; }
-        if(board[row][col].getPieceType()) {
+        if(board[row][col].getPieceType()) { // grabbed a piece
+            const moveOptions = board[row][col].getPieceType().getMovementOptions(board);
+            console.log(moveOptions);
+            for(var i=0;i<moveOptions.length;i++) {
+                const pos = moveOptions[i];
+                board[pos[0]][pos[1]].setMoveableSquare(true);
+            }
             setHeldPiece(board[row][col].getPieceType());
             setOrgPosition([row, col]);
             board[row][col].removePiece();
@@ -145,6 +170,8 @@ function ChessBoard(props) {
     return (
     <>
         <div className="board-container">
+            <br/>
+            <br/>
             <div className="chess-board" onMouseLeave={handleMouseLeave} onMouseDown={handleMouseEnter} onMouseMove={handleMouseDrag} onMouseUp={handleMouseUp}>
                 { board.map((row) => row.map((square) => <Block key={square.pos} square={square}/> )) }
                 { heldPiece ? <TempPiece mousePos={mousePos} piece={heldPiece}/> : null}
