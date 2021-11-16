@@ -92,6 +92,25 @@ function clearMovementOptions(board) {
     }
 }
 
+function getAllWhiteAttackPos(board) {
+    var attackPos = []
+    for(var row=0;row<8;row++) {
+        for(var col=0;col<8;col++) {
+            const piece = board[row][col].getPieceType();
+            if(piece == null) { continue; }
+            if(piece.getPieceColor() == 'w') {
+                const pos = piece.getAttackPos(board);
+                attackPos.push(...pos);
+            }
+        }
+    }
+    // remove the duplicate positions
+    attackPos = attackPos.filter(function(item, pos) {
+        return attackPos.indexOf(item) == pos;
+    })
+    return attackPos;
+}
+
 function ChessBoard(props) {
 
     var initBoard = []; 
@@ -119,7 +138,10 @@ function ChessBoard(props) {
             board[pos[0]][pos[1]].addPiece(heldPiece) // place the piece onto the board
             console.log('pos before log', pos)
             board[pos[0]][pos[1]].getPieceType().addMoveHistory(pos) // add the pos to the move history and set the new piece's pos
+            
             clearMovementOptions(board);
+
+            getAllWhiteAttackPos(board);
         }
         console.log(getPosOfPiece(e), "end");
         setMouseState(MOUSESTATE.NOPRESS)
@@ -150,10 +172,12 @@ function ChessBoard(props) {
                 break;
         }
     }
+
     function handleMouseEnter(e) {
         const [row, col] = getPosOfPiece(e);
         if(board[row][col].getPieceType()) { // grabbed a piece
-            const moveOptions = board[row][col].getPieceType().getMovementOptions(board);
+            const pieceSelected = board[row][col].getPieceType();
+            const moveOptions = pieceSelected.getMovementOptions(board, (pieceSelected.getPieceColor() == 'w'));
             console.log(moveOptions);
             for(var i=0;i<moveOptions.length;i++) {
                 const pos = moveOptions[i];
