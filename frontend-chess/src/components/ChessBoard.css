@@ -36,6 +36,10 @@
     background-color: rgb(125 135 150);
 }
 
+.r {
+    background-color: rgb(255, 0, 0);
+}
+
 .selectDisable {
     -webkit-user-select: none;
     -khtml-user-select: none;
