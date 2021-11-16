@@ -24,7 +24,7 @@ function Block(props) {
 
     return (
         <>
-            <div className={`board-block ${square.getAttackedByWhite() == true ? 'r' : ''}`}>
+            <div className={`board-block ${square.getAttackedByBlack() == true ? 'r' : ''}`}>
                 {img}
                 {square.moveableSquare == true ? <div className="tiny-circle"></div> : null}
             </div>
