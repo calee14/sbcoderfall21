@@ -133,7 +133,7 @@ function ChessBoard(props) {
                 console.log(getPosOfPiece(e), "end");
                 setMouseState(MOUSESTATE.NOPRESS)
                 setHeldPiece(null);
-                clearMovementOptions();
+                clearMovementOptions(board);
                 break;
             default:
                 break;
