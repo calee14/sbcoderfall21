@@ -23,14 +23,14 @@ class Pawn extends Piece {
         // Check if pawn can move one and two spaces
         var tempPos = [1, 0];
         var newPos = [pieceRow-tempPos[0], pieceCol-tempPos[1]];
-        if(!this.pieceExists(board, newPos)) {
-            console.log('the first movement')
+        if(!this.outOfBounds(newPos) && !this.pieceExists(board, newPos)) {
+            // move forward one is an option
             moveOptions.push(newPos);
             
             // check for the two space movement
             tempPos = [2, 0];
             newPos = [pieceRow-tempPos[0], pieceCol-tempPos[1]];
-            if(this.moveHistory.length == 0 && !this.pieceExists(board, newPos)) { // this is the first move for the pawn
+            if(this.moveHistory.length == 0 && !this.outOfBounds(newPos) && !this.pieceExists(board, newPos)) { // this is the first move for the pawn
                 moveOptions.push(newPos);
             }
         }
