@@ -49,7 +49,8 @@ class Piece {
         return false;
     }
 
-    getMovementOptions(board=null, playerPiece=true) { return []; }
+    getMovementOptions(board=null, isPlayerPiece=false) { return []; }
+    getAttackPos(board=null, isPlayerPiece=false) { return []; }
 }
 
 export default Piece
