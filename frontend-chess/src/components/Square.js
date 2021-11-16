@@ -17,7 +17,7 @@ class Square {
     getSquareColor() { return this.squareColor; }
     getMoveableSquare() { return this.moveableSquare; }
     getAttackedByWhite() { return this.attackedByWhite; }
-    getAttackedByBlack() { return this.getAttackedByBlack; }
+    getAttackedByBlack() { return this.attackedByBlack; }
 
     setMoveableSquare(b) { this.moveableSquare = b; }
     setAttackedByWhite(b) { this.attackedByWhite = b; }
