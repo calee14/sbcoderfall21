@@ -92,14 +92,14 @@ function clearMovementOptions(board) {
     }
 }
 
-function getAllWhiteAttackPos(board) {
+function getAllAttackPosForColor(board, color) {
     var attackPos = []
     for(var row=0;row<8;row++) {
         for(var col=0;col<8;col++) {
             const piece = board[row][col].getPieceType();
             if(piece == null) { continue; }
-            if(piece.getPieceColor() == 'w') {
-                const pos = piece.getAttackPos(board);
+            if(piece.getPieceColor() == color) {
+                const pos = piece.getAttackPos(board, (piece.getPieceColor() == 'w'));
                 attackPos.push(...pos);
             }
         }
@@ -109,6 +109,28 @@ function getAllWhiteAttackPos(board) {
         return attackPos.indexOf(item) == pos;
     })
     return attackPos;
+}
+
+function setAllAttackPosForColor(board, attackPos, color) {
+    for(var i=0;i<attackPos.length;i++) {
+        const pos = attackPos[i];
+        console.log(pos)
+        if(color == 'w') {
+            board[pos[0]][pos[1]].setAttackedByWhite(true);
+        } else if(color == 'b') {
+            board[pos[0]][pos[1]].setAttackedByBlack(true);
+        }
+    }
+}
+
+function clearAllAttackPos(board) {
+    for(var row=0;row<8;row++) {
+        for(var col=0;col<8;col++) {
+            const square = board[row][col]
+            square.setAttackedByBlack(false);
+            square.setAttackedByWhite(false);
+        }
+    }
 }
 
 function ChessBoard(props) {
@@ -141,7 +163,9 @@ function ChessBoard(props) {
             
             clearMovementOptions(board);
 
-            getAllWhiteAttackPos(board);
+            const whiteAttackPos = getAllAttackPosForColor(board, 'w');
+            clearAllAttackPos(board)
+            setAllAttackPosForColor(board, whiteAttackPos, 'w');
         }
         console.log(getPosOfPiece(e), "end");
         setMouseState(MOUSESTATE.NOPRESS)
