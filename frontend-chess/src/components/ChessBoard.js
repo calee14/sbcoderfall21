@@ -165,8 +165,8 @@ function ChessBoard(props) {
 
             const whiteAttackPos = getAllAttackPosForColor(board, 'w');
             const blackAttackPos = getAllAttackPosForColor(board, 'b')
-            clearAllAttackPos(board)
-            setAllAttackPosForColor(board, whiteAttackPos, 'w');
+            clearAllAttackPos(board); // clear all attack pos before updating them
+            setAllAttackPosForColor(board, whiteAttackPos, 'w'); // update the attack pos for both piece colors
             setAllAttackPosForColor(board, blackAttackPos, 'b');
         }
         console.log(getPosOfPiece(e), "end");
