@@ -13,8 +13,8 @@ class Pawn extends Piece {
             Returns: Array[] of the positions on the board
         */
 
+        // get the position of this piece
         const pos = this.getPos();
-        console.log(pos)
         var pieceRow = pos[0];
         var pieceCol = pos[1];
 
@@ -47,6 +47,25 @@ class Pawn extends Piece {
             }
         }
         return moveOptions;
+    }
+
+    getAttackPos(board=null, isPlayerPiece=false) {
+        // get the position of this piece
+        const pos = this.getPos();
+        var pieceRow = pos[0];
+        var pieceCol = pos[1];
+        
+        var attackPos = [];
+        // Check moves if pawn can attack
+        var attackOptions = [[1, 1], [1, -1]];
+        for(var i=0;i<attackOptions.length;i++) {
+            if(!isPlayerPiece) { attackOptions[i] = attackOptions[i].map(function(x) { return x * -1; } ) };
+            const newPos = [pieceRow-attackOptions[i][0], pieceCol-attackOptions[i][1]]
+            if(this.pieceExists(board, newPos)) {
+                attackPos.push(newPos);
+            }
+        }
+        return attackPos;
     }
 
 }
