@@ -5,16 +5,16 @@ class Knight extends Piece {
         super(color, pos, imgURL);
     }
 
-    getMovementOptions(board=null, playerPiece=true) {
+    getMovementOptions(board=null, isPlayerPiece=false) {
         /*
             Parameters:
                 board: Array[Square]
-                playerPiece: bool
+                isPlayerPiece: bool
             Returns: Array[] of the positions on the board
         */
 
+        // get the position of this piece
         const pos = this.getPos();
-        console.log(pos)
         var pieceRow = pos[0];
         var pieceCol = pos[1];
 
@@ -32,6 +32,13 @@ class Knight extends Piece {
             }
         }
         return moveOptions;
+    }
+
+    getAttackPos(board=null, isPlayerPiece=false) {
+        // for a knight its attack positions are the same as the movement ones
+        const attackOptions = this.getMovementOptions(board, isPlayerPiece);
+        
+        return attackOptions;
     }
 }
 
