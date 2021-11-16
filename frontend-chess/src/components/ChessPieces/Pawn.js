@@ -61,7 +61,7 @@ class Pawn extends Piece {
         for(var i=0;i<attackOptions.length;i++) {
             if(!isPlayerPiece) { attackOptions[i] = attackOptions[i].map(function(x) { return x * -1; } ) };
             const newPos = [pieceRow-attackOptions[i][0], pieceCol-attackOptions[i][1]]
-            if(this.pieceExists(board, newPos)) {
+            if(!this.outOfBounds(newPos)) {
                 attackPos.push(newPos);
             }
         }
