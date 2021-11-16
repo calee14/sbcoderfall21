@@ -5,7 +5,7 @@ class Pawn extends Piece {
         super(color, pos, imgURL);
     }
 
-    getMovementOptions(board=null, playerPiece=true) {
+    getMovementOptions(board=null, isPlayerPiece=false) {
         /*
             Parameters:
                 board: Array[Square]
@@ -22,6 +22,7 @@ class Pawn extends Piece {
 
         // Check if pawn can move one and two spaces
         var tempPos = [1, 0];
+        if(!isPlayerPiece) { tempPos = tempPos.map(function(x) { return x * -1; } ) };
         var newPos = [pieceRow-tempPos[0], pieceCol-tempPos[1]];
         if(!this.outOfBounds(newPos) && !this.pieceExists(board, newPos)) {
             // move forward one is an option
@@ -29,6 +30,7 @@ class Pawn extends Piece {
             
             // check for the two space movement
             tempPos = [2, 0];
+            if(!isPlayerPiece) { tempPos = tempPos.map(function(x) { return x * -1; } ) };
             newPos = [pieceRow-tempPos[0], pieceCol-tempPos[1]];
             if(this.moveHistory.length == 0 && !this.outOfBounds(newPos) && !this.pieceExists(board, newPos)) { // this is the first move for the pawn
                 moveOptions.push(newPos);
@@ -36,8 +38,9 @@ class Pawn extends Piece {
         }
         
         // Check moves if pawn can attack
-        const attackOptions = [[1, 1], [1, -1]];
+        var attackOptions = [[1, 1], [1, -1]];
         for(var i=0;i<attackOptions.length;i++) {
+            if(!isPlayerPiece) { attackOptions[i] = attackOptions[i].map(function(x) { return x * -1; } ) };
             const newPos = [pieceRow-attackOptions[i][0], pieceCol-attackOptions[i][1]]
             if(this.pieceExists(board, newPos) && this.hasOppPieceColor(board, newPos)) {
                 moveOptions.push(newPos);
