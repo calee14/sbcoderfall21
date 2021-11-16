@@ -2,7 +2,6 @@ import React from "react";
 
 function TempPiece(props) {
     const {mousePos, piece} = props;
-    console.log(`${mousePos}`)
     
     const mouseStyle = {
         position: 'absolute',
