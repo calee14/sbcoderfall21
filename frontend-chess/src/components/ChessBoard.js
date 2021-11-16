@@ -164,8 +164,10 @@ function ChessBoard(props) {
             clearMovementOptions(board);
 
             const whiteAttackPos = getAllAttackPosForColor(board, 'w');
+            const blackAttackPos = getAllAttackPosForColor(board, 'b')
             clearAllAttackPos(board)
             setAllAttackPosForColor(board, whiteAttackPos, 'w');
+            setAllAttackPosForColor(board, blackAttackPos, 'b');
         }
         console.log(getPosOfPiece(e), "end");
         setMouseState(MOUSESTATE.NOPRESS)
