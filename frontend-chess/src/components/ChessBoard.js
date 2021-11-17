@@ -100,6 +100,7 @@ function getAllAttackPosForColor(board, color) {
             if(piece == null) { continue; }
             if(piece.getPieceColor() == color) {
                 const pos = piece.getAttackPos(board, (piece.getPieceColor() == 'w'));
+                console.log(pos);
                 attackPos.push(...pos);
             }
         }
