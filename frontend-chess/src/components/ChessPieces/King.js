@@ -14,7 +14,6 @@ class King extends Piece {
         */
 
         const pos = this.getPos();
-        console.log(pos)
         var pieceRow = pos[0];
         var pieceCol = pos[1];
 
@@ -43,7 +42,6 @@ class King extends Piece {
         */
 
             const pos = this.getPos();
-            console.log(pos)
             var pieceRow = pos[0];
             var pieceCol = pos[1];
     

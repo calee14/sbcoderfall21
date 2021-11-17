@@ -14,7 +14,6 @@ class Rook extends Piece {
         */
 
         const pos = this.getPos();
-        console.log(pos);
         var pieceRow = pos[0];
         var pieceCol = pos[1];
 
@@ -27,7 +26,6 @@ class Rook extends Piece {
         for(var i=0;i<dirOptions.length;i++) {
             var newPos = [pieceRow-dirOptions[i][0], pieceCol-dirOptions[i][1]];
             while(!this.outOfBounds(newPos) && !this.pieceExists(board, newPos)) { // stop loop when we reach a piece
-                console.log(newPos);
                 moveOptions.push(newPos);
                 newPos = [newPos[0]-dirOptions[i][0], newPos[1]-dirOptions[i][1]];
             }
@@ -48,7 +46,6 @@ class Rook extends Piece {
         */
 
         const pos = this.getPos();
-        console.log(pos);
         var pieceRow = pos[0];
         var pieceCol = pos[1];
 
@@ -61,7 +58,6 @@ class Rook extends Piece {
         for(var i=0;i<dirOptions.length;i++) {
             var newPos = [pieceRow-dirOptions[i][0], pieceCol-dirOptions[i][1]];
             while(!this.outOfBounds(newPos) && !this.pieceExists(board, newPos)) { // stop loop when we reach a piece
-                console.log(newPos);
                 moveOptions.push(newPos);
                 newPos = [newPos[0]-dirOptions[i][0], newPos[1]-dirOptions[i][1]];
             }
