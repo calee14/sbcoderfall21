@@ -1,4 +1,4 @@
-import React, { useEffect, Component } from 'react'
+import React, { useEffect } from 'react'
 import Block from './Block'
 import Square from './Square';
 import { useState } from 'react';
@@ -37,10 +37,10 @@ function initializeBoard(board) {
     for(var i=0;i<8;i++) {
         var row = [];
         for(var j=0;j<8;j++) {
-            if(i%2==0) {
-                var color = (j % 2 == 0) ? 'w' : 'b';
+            if(i%2===0) {
+                var color = (j % 2 === 0) ? 'w' : 'b';
             } else {
-                var color = (j % 2 == 1) ? 'w' : 'b';
+                var color = (j % 2 === 1) ? 'w' : 'b';
             }
             
             row.push(new Square(color, null, [i, j]));
@@ -97,9 +97,9 @@ function getAllAttackPosForColor(board, color) {
     for(var row=0;row<8;row++) {
         for(var col=0;col<8;col++) {
             const piece = board[row][col].getPieceType();
-            if(piece == null) { continue; }
-            if(piece.getPieceColor() == color) {
-                const pos = piece.getAttackPos(board, (piece.getPieceColor() == 'w'));
+            if(piece === null) { continue; }
+            if(piece.getPieceColor() === color) {
+                const pos = piece.getAttackPos(board, (piece.getPieceColor() === 'w'));
                 attackPos.push(...pos);
             }
         }
@@ -145,7 +145,7 @@ function findChecksForColor(board, pos, color) {
         const p = pos[i];
         const piece = board[p[0]][p[1]].getPieceType()
         if(piece == null) { continue; }
-        if(piece.constructor.name == "King" && piece.getPieceColor() == color) { // the attacks have checked enemy king
+        if(piece.constructor.name === "King" && piece.getPieceColor() === color) { // the attacks have checked enemy king
             return piece.getPos();
         }
     }
