@@ -1,3 +1,8 @@
+img {
+    border-style: none;
+    border: none;
+}
+
 .chess-board {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto;
