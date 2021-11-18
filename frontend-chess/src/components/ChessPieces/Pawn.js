@@ -1,9 +1,6 @@
 import Piece from "../Piece";
 
 class Pawn extends Piece {
-    constructor(color, pos, imgURL) {
-        super(color, pos, imgURL);
-    }
 
     getMovementOptions(board=null, isPlayerPiece=false) {
         /*
@@ -32,7 +29,7 @@ class Pawn extends Piece {
             tempPos = [2, 0];
             if(!isPlayerPiece) { tempPos = tempPos.map(function(x) { return x * -1; } ) };
             newPos = [pieceRow-tempPos[0], pieceCol-tempPos[1]];
-            if(this.moveHistory.length == 0 && !this.outOfBounds(newPos) && !this.pieceExists(board, newPos)) { // this is the first move for the pawn
+            if(this.moveHistory.length === 0 && !this.outOfBounds(newPos) && !this.pieceExists(board, newPos)) { // this is the first move for the pawn
                 moveOptions.push(newPos);
             }
         }

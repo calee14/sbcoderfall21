@@ -1,9 +1,6 @@
 import Piece from "../Piece";
 
 class Rook extends Piece {
-    constructor(color, pos, imgURL) {
-        super(color, pos, imgURL);
-    }
 
     getMovementOptions(board=null, isPlayerPiece=true) {
         /*

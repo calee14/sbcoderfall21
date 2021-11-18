@@ -1,5 +1,3 @@
-import React from "react";
-
 class Square {
     constructor(color, pieceType, pos, imgURL=null) {
         this.squareColor = color;
