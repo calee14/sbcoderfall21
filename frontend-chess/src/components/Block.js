@@ -17,7 +17,7 @@ function Block(props) {
     if(square.pieceType != null) {
         img = <img className="selectDisable" src={square.pieceType.imgURL} width={80} height={80}></img>
     } else {
-        img = <img></img>
+        img = <div></div>
     }
 
     // ${square.getAttackedByWhite() == true ? 'r' : ''}
