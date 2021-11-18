@@ -5,7 +5,7 @@ function Navbar() {
     <>
         <nav>
             <div className="game-title">
-                <h1>Chess.ai</h1>
+                <h1>Chess.ai without the ai :)</h1>
             </div>
         </nav>
     </>
