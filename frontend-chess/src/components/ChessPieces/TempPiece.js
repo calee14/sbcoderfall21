@@ -11,7 +11,7 @@ function TempPiece(props) {
     return (
         <>
             <div className={`chess-piece-temp selectDisable`} style={mouseStyle}>
-                <img className="selectDisable" src={piece.imgURL} width={80} height={80}></img>
+                <img className="selectDisable" alt="" src={piece.imgURL} width={80} height={80}></img>
             </div>
         </>
     );
