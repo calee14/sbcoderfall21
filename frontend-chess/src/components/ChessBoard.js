@@ -32,15 +32,16 @@ function initializeBoard(board) {
 
     const AI_color = 'b';
     const player_color = 'w';
-
+    var i = 0; // init i index counter for the for loops
+    
     // intializes a 2d array of the chess board with pieces
-    for(var i=0;i<8;i++) {
+    for(i=0;i<8;i++) {
         var row = [];
         for(var j=0;j<8;j++) {
             if(i%2===0) {
                 var color = (j % 2 === 0) ? 'w' : 'b';
             } else {
-                var color = (j % 2 === 1) ? 'w' : 'b';
+                color = (j % 2 === 1) ? 'w' : 'b';
             }
             
             row.push(new Square(color, null, [i, j]));
@@ -55,7 +56,7 @@ function initializeBoard(board) {
     board[0][5].addPiece(new Bishop(AI_color, [0,5], bb));
     board[0][6].addPiece(new Knight(AI_color, [0,6], bn));
     board[0][7].addPiece(new Rook(AI_color, [0,7], br));
-    for(var i=0;i<8;i++) {
+    for(i=0;i<8;i++) {
         board[1][i].addPiece(new Pawn(AI_color, [1, i], bp));
     }
 
@@ -67,7 +68,7 @@ function initializeBoard(board) {
     board[7][5].addPiece(new Bishop(player_color, [7,5], wb));
     board[7][6].addPiece(new Knight(player_color, [7,6], wn));
     board[7][7].addPiece(new Rook(player_color, [7,7], wr));
-    for(var i=0;i<8;i++) {
+    for(i=0;i<8;i++) {
         board[6][i].addPiece(new Pawn(player_color, [6, i], wp));
     }
 
@@ -106,7 +107,7 @@ function getAllAttackPosForColor(board, color) {
     }
     // remove the duplicate positions
     attackPos = attackPos.filter(function(item, pos) {
-        return attackPos.indexOf(item) == pos;
+        return attackPos.indexOf(item) === pos;
     })
     return attackPos;
 }
@@ -114,9 +115,9 @@ function getAllAttackPosForColor(board, color) {
 function setAllAttackPosForColor(board, attackPos, color) {
     for(var i=0;i<attackPos.length;i++) {
         const pos = attackPos[i];
-        if(color == 'w') {
+        if(color === 'w') {
             board[pos[0]][pos[1]].setAttackedByWhite(true);
-        } else if(color == 'b') {
+        } else if(color === 'b') {
             board[pos[0]][pos[1]].setAttackedByBlack(true);
         }
     }
@@ -173,9 +174,9 @@ function ChessBoard(props) {
     function handleMouseUp(e) {
         var pos = getPosOfPiece(e);
         console.log('pos we logging', pos)
-        if(pos == [-1, -1]) { // attempt to move piece failed and won't be processed
+        if(pos === [-1, -1]) { // attempt to move piece failed and won't be processed
             board[orgPosition[0]][orgPosition[1]].addPiece(heldPiece);
-        } else if(heldPiece != null) { // complete an valid movement of a piece
+        } else if(heldPiece !== null) { // complete an valid movement of a piece
             // add the piece to the board and add to its history
             board[pos[0]][pos[1]].addPiece(heldPiece) // place the piece onto the board
             console.log('pos before log', pos)
@@ -190,7 +191,7 @@ function ChessBoard(props) {
             setAllAttackPosForColor(board, blackAttackPos, 'b');
 
             // find checks for white and black king
-            if(heldPiece.getPieceColor() == 'w') {
+            if(heldPiece.getPieceColor() === 'w') {
                 if(findChecksForColor(board, blackAttackPos, 'w').length > 0) { // reset the board if enemey can check king if move piece
                     board[orgPosition[0]][orgPosition[1]].addPiece(heldPiece);
                     board[pos[0]][pos[1]].removePiece();
@@ -200,12 +201,12 @@ function ChessBoard(props) {
                         board[kingPos[0]][kingPos[1]].setHasKingChecked(true);
                     }
                 }
-            } else if(heldPiece.getPieceColor() == 'b') {
+            } else if(heldPiece.getPieceColor() === 'b') {
                 if(findChecksForColor(board, whiteAttackPos, 'b').length > 0) {
                     board[orgPosition[0]][orgPosition[1]].addPiece(heldPiece);
                     board[pos[0]][pos[1]].removePiece()
                 }
-                var kingPos = findChecksForColor(board, blackAttackPos, 'w');
+                kingPos = findChecksForColor(board, blackAttackPos, 'w');
                 if(kingPos.length > 0) {
                     board[kingPos[0]][kingPos[1]].setHasKingChecked(true);
                 }
@@ -248,7 +249,7 @@ function ChessBoard(props) {
             const pieceSelected = board[row][col].getPieceType(); // get the piece selected 
             
             // find all move options for the piece
-            const moveOptions = pieceSelected.getMovementOptions(board, (pieceSelected.getPieceColor() == 'w'));
+            const moveOptions = pieceSelected.getMovementOptions(board, (pieceSelected.getPieceColor() === 'w'));
             for(var i=0;i<moveOptions.length;i++) {
                 const pos = moveOptions[i];
                 board[pos[0]][pos[1]].setMoveableSquare(true);
