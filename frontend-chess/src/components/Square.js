@@ -7,6 +7,9 @@ class Square {
         this.pos = pos;
         this.imgURL = imgURL// img file name
         this.moveableSquare = false;
+        this.attackedByWhite = false;
+        this.attackedByBlack = false;
+        this.hasKingChecked = false;
     }
 
     getImage() { return this.imgURL; }
@@ -14,8 +17,14 @@ class Square {
     getPieceType() { return this.pieceType; }
     getSquareColor() { return this.squareColor; }
     getMoveableSquare() { return this.moveableSquare; }
+    getAttackedByWhite() { return this.attackedByWhite; }
+    getAttackedByBlack() { return this.attackedByBlack; }
+    getHasKingChecked() { return this.hasKingChecked; }
 
     setMoveableSquare(b) { this.moveableSquare = b; }
+    setAttackedByWhite(b) { this.attackedByWhite = b; }
+    setAttackedByBlack(b) { this.attackedByBlack = b; }
+    setHasKingChecked(b) { this.hasKingChecked = b; }
 
     addPiece(piece) {
         this.pieceType = piece;

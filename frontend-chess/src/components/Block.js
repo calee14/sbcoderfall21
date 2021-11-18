@@ -20,9 +20,11 @@ function Block(props) {
         img = <img></img>
     }
 
+    // ${square.getAttackedByWhite() == true ? 'r' : ''}
+
     return (
         <>
-            <div className={`board-block ${square.squareColor}`}>
+            <div className={`board-block ${square.getHasKingChecked() == true ? 'r' : `${square.getSquareColor()}`}`}>
                 {img}
                 {square.moveableSquare == true ? <div className="tiny-circle"></div> : null}
             </div>
