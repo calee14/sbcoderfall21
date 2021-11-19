@@ -7,6 +7,15 @@ function App() {
   <>
     <Navbar/>
     <ChessBoard/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <h1>without the ai :)</h1>
+
   </>
   );
 }
