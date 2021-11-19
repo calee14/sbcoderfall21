@@ -153,6 +153,12 @@ function findChecksForColor(board, pos, color) {
     return [];
 }
 
+function getMeme(piece) {
+    var memeImgs = ['https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/Xhive24/php3w9lbt.jpeg', piece.getImage(), 'https://preview.redd.it/2q5ybq3nfeh41.jpg?auto=webp&s=2ae344d6dab55af21d44e1813e2542a9a1a456c0', 'https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PedroPinhata/phpqGmKAs.png', 'https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PedroPinhata/phpfpQiuI.png', 'https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PedroPinhata/phpu8o1eM.jpeg', 'https://images.chesscomfiles.com/proxy/img.memecdn.com/i-heard-chess-memes-are-the-new-meta_o_3377699725002209/https/70880214af.jpg', 'https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/Ritesh_ratn/phpYaMNsS.jpeg', 'https://pics.me.me/transcending-normy-chess-39654795.png']
+    var randIdx = Math.floor( Math.random() * memeImgs.length );
+    return memeImgs[randIdx];
+}
+
 function ChessBoard(props) {
 
     var initBoard = []; 
@@ -168,7 +174,8 @@ function ChessBoard(props) {
     const [mousePos, setMousePos] = useState({x: 0, y: 0});
     const [mouseState, setMouseState] = useState(MOUSESTATE.NOPRESS);
     const [heldPiece, setHeldPiece] = useState(null);
-    const [orgPosition, setOrgPosition] = useState([0, 0])
+    const [orgPosition, setOrgPosition] = useState([0, 0]);
+    const [memeImg, setMemeImg] = useState('');
     
     
     function handleMouseUp(e) {
@@ -257,6 +264,7 @@ function ChessBoard(props) {
 
             // handle chess grab mechanics
             setHeldPiece(board[row][col].getPieceType());
+            setMemeImg(getMeme(board[row][col].getPieceType()));
             setOrgPosition([row, col]);
             board[row][col].removePiece();
         }
@@ -271,7 +279,7 @@ function ChessBoard(props) {
             <br/>
             <div className="chess-board" onMouseLeave={handleMouseLeave} onMouseDown={handleMouseEnter} onMouseMove={handleMouseDrag} onMouseUp={handleMouseUp}>
                 { board.map((row) => row.map((square) => <Block key={square.pos} square={square}/> )) }
-                { heldPiece ? <TempPiece mousePos={mousePos} piece={heldPiece}/> : null}
+                { heldPiece ? <TempPiece mousePos={mousePos} piece={heldPiece} imgLink={memeImg}/> : null}
             </div>
         </div>
     </>
